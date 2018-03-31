@@ -1,13 +1,99 @@
-<!--index.wxml-->
-<view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
+<!--pages/main/main.wxml-->
+<view class='box'>
+  <view class='user-content'>
+    <view class='user-info'>
+        <image src='https://i2.bvimg.com/582587/f6da059c5a0c4dc9.png' style='height:120rpx;width:120rpx;'></image>
+        <view style='font-size:30rpx'>欢迎，Jeremy是大胖皓</view>
+    </view>
+    <view class='user-info'>
+      <image src='https://i2.bvimg.com/582587/7c8bc0fb43743aed.png' style='height:100rpx;width:100rpx'></image>
+      <view style='font-size:25rpx'>今天是3月18日</view>
+      <view style='font-size:25rpx'>晴，适宜出行</view>
+    </view>
   </view>
-  <view class="usermotto">
-    <button class='weui-btn mini-btn' type='default'plain='true' bindtap='gotoMain'>{{motto}}</button>
+
+  <!--中部list-->
+  <scroll-view scroll-y style="height:20%">
+  <view class='list'>
+      <view class='item'>
+        <view class="ing"><image src='http://i2.bvimg.com/582587/c92211d4ceff22a3.png' style='height:100rpx;width:100rpx'></image></view>
+        <view class='item-text'>
+          <view class='item-name'>聚会1</view>
+          <view class='item-author'>
+            <view>张指导</view>
+            <view>更新于2018-3-10</view>
+          </view>
+        </view>
+        <view class='item-read'>
+          <view class="item-name"><image src='https://i2.bvimg.com/582587/e02e27fd5d5b3f72.png' style='height:70rpx;width:70rpx'></image></view>
+          <view class="item-num">已有3名小伙伴阅览</view>
+        </view>
+        <view class="ing"><image src='https://i2.bvimg.com/582587/9aa1d149e623a4b6.png' style='height:50rpx;width:50rpx'></image></view>
+      </view>
+
+      <view class='item'>
+        <view class="ing"><image src='http://i2.bvimg.com/582587/c92211d4ceff22a3.png' style='height:100rpx;width:100rpx'></image></view>
+        <view class='item-text'>
+          <view class='item-name'>聚会1</view>
+          <view class='item-author'>
+            <view>张指导</view>
+            <view>更新于2018-3-10</view>
+          </view>
+        </view>
+        <view class='item-read'>
+          <view class="item-name"><image src='https://i2.bvimg.com/582587/15a49155159e00ab.png' style='height:70rpx;width:70rpx'></image></view>
+          <view class="item-num">已有3名小伙伴阅览</view>
+        </view>
+        <view class="ing"><image src='https://i2.bvimg.com/582587/9aa1d149e623a4b6.png' style='height:50rpx;width:50rpx'></image></view>
+      </view>
+
+      <view class='item'>
+        <view class="ing"><image src='/icon/进行中.png' style='height:100rpx;width:100rpx'></image></view>
+        <view class='item-text'>
+          <view class='item-name'>聚会1</view>
+          <view class='item-author'>
+            <view>张指导</view>
+            <view>更新于2018-3-10</view>
+          </view>
+        </view>
+        <view class='item-read'>
+          <view class="item-name"><image src='/icon/星标.png' style='height:70rpx;width:70rpx'></image></view>
+          <view class="item-num">已有3名小伙伴阅览</view>
+        </view>
+        <view class="ing"><image src='/icon/删除.png' style='height:50rpx;width:50rpx'></image></view>
+      </view>
+
+      <view class='item'>
+        <view class="ing"><image src='/icon/进行中.png' style='height:100rpx;width:100rpx'></image></view>
+        <view class='item-text'>
+          <view class='item-name'>聚会1</view>
+          <view class='item-author'>
+            <view>张指导</view>
+            <view>更新于2018-3-10</view>
+          </view>
+        </view>
+        <view class='item-read'>
+          <view class="item-name"><image src='/icon/星_虚.png' style='height:70rpx;width:70rpx'></image></view>
+          <view class="item-num">已有3名小伙伴阅览</view>
+        </view>
+        <view class="ing"><image src='/icon/删除.png' style='height:50rpx;width:50rpx'></image></view>
+      </view>
+
+      <view class='item'>
+        <view class="ing"><image src='/icon/进行中.png' style='height:100rpx;width:100rpx'></image></view>
+        <view class='item-text'>
+          <view class='item-name'>聚会1</view>
+          <view class='item-author'>
+            <view>张指导</view>
+            <view>更新于2018-3-10</view>
+          </view>
+        </view>
+        <view class='item-read'>
+          <view class="item-name"><image src='/icon/星标.png' style='height:70rpx;width:70rpx'></image></view>
+          <view class="item-num">已有3名小伙伴阅览</view>
+        </view>
+        <view class="ing"><image src='/icon/删除.png' style='height:50rpx;width:50rpx'></image></view>
+      </view>
   </view>
+  </scroll-view>
 </view>

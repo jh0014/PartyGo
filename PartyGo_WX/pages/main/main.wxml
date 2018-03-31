@@ -2,71 +2,53 @@
 <view class='body'>
   <!-- 首部标题 -->
   <view class='title'>
-    <view>小聚会</view>
+    <view style='font-size:50rpx;color:#F0F8FF'>小聚会</view>
   </view>
-  <!--中部list-->
-  <scroll-view scroll-y style="height: 100%;">
-  <view class='list'>
-    <view class="weui-form-preview item">
-            <view class="weui-form-preview__bd">
-                <view class="weui-form-preview__item">
-                    <view class="weui-form-preview__label">聚会标题</view>
-                    <view class="weui-form-preview__value">该聚会啦</view>
-                </view>
-                <view class="weui-form-preview__item">
-                    <view class="weui-form-preview__label">时间</view>
-                    <view class="weui-form-preview__value">2018年10月10日</view>
-                </view>
-                <view class="weui-form-preview__item">
-                    <view class="weui-form-preview__label">地点</view>
-                    <view class="weui-form-preview__value">新华大街</view>
-                </view>
+  <view class='form'>
+    <view class='head-model'>
+      <view class='head'>
+          <image style='height:30px;width:30px' src="/icon/会员中心.png"></image>
+          <view class='text'>Jeremy</view>
+      </view>
+
+      <view class='head'>
+          <image style='height:28px;width:28px' src="/icon/时钟.png"></image>
+          <view class='text'>2018-03-14</view>
+      </view>
+
+      <view class='head'>
+          <image style='height:30px;width:30px' src="/icon/地标.png"></image>
+          <view class='text'>蜀山半山腰</view>
+      </view>
+    </view>
+
+<scroll-view scroll-y style="height: 10%;">
+    <view class='content-model'>
+      <view class='content-center'>
+          <view class='content'>
+            <view class='content-item'>
+              <input placeholder="活动1"/>
+              <view class='line'></view>
             </view>
-            <view class="weui-form-preview__ft">
-                <navigator class="weui-form-preview__btn weui-form-preview__btn_default" hover-class="weui-form-preview__btn_active">查看详情</navigator>
+            <view class='content-item'>
+              <input placeholder="活动地点1"/>
+              <view class='line'></view>
             </view>
+          </view>
+
+          <view class='content'>
+            <view class='content-item'>
+              <input placeholder="活动2"/>
+              <view class='line'></view>
+            </view>
+            <view class='content-item'>
+              <input placeholder="活动地点2"/>
+              <view class='line'></view>
+            </view>
+          </view>
         </view>
-        
-        <view class="weui-form-preview item">
-            <view class="weui-form-preview__bd">
-                <view class="weui-form-preview__item">
-                    <view class="weui-form-preview__label">聚会标题</view>
-                    <view class="weui-form-preview__value">该聚会啦</view>
-                </view>
-                <view class="weui-form-preview__item">
-                    <view class="weui-form-preview__label">时间</view>
-                    <view class="weui-form-preview__value">2018年10月10日</view>
-                </view>
-                <view class="weui-form-preview__item">
-                    <view class="weui-form-preview__label">地点</view>
-                    <view class="weui-form-preview__value">新华大街</view>
-                </view>
-            </view>
-            <view class="weui-form-preview__ft">
-                <navigator class="weui-form-preview__btn weui-form-preview__btn_default" hover-class="weui-form-preview__btn_active">查看详情</navigator>
-            </view>
-        </view>
-  
-  <view class="weui-form-preview item">
-            <view class="weui-form-preview__bd">
-                <view class="weui-form-preview__item">
-                    <view class="weui-form-preview__label">聚会标题</view>
-                    <view class="weui-form-preview__value">该聚会啦</view>
-                </view>
-                <view class="weui-form-preview__item">
-                    <view class="weui-form-preview__label">时间</view>
-                    <view class="weui-form-preview__value">2018年10月10日</view>
-                </view>
-                <view class="weui-form-preview__item">
-                    <view class="weui-form-preview__label">地点</view>
-                    <view class="weui-form-preview__value">新华大街</view>
-                </view>
-            </view>
-            <view class="weui-form-preview__ft">
-                <navigator class="weui-form-preview__btn weui-form-preview__btn_default" hover-class="weui-form-preview__btn_active">查看详情</navigator>
-            </view>
-        </view>
-  
-  </view>
-  </scroll-view>
+      </view>
+      </scroll-view>
+    </view>
+    <button class="weui-btn" type="primary" style='width:680rpx;background-color:#3CB371'>保存</button>
 </view>

@@ -1,0 +1,7 @@
+{
+  "enablePullDownRefresh": true,
+  "navigationBarTitleText":"小聚会",
+  "navigationBarTextStyle": "white",
+  "navigationBarBackgroundColor": "#3CB371",
+  "backgroundTextStyle": "dark"
+}

@@ -42,6 +42,8 @@ Page({
         }
       })
     }
+
+
   },
   getUserInfo: function(e) {
     console.log(e)
@@ -56,5 +58,15 @@ Page({
     wx.redirectTo({
       url: '../main/main',
     })
+  },
+
+  onPullDownRefresh:function(){
+    wx.showToast({
+      title: '成功',
+      icon: 'succes',
+      duration: 1000,
+      mask: true
+    });
+    wx.stopPullDownRefresh();
   }
 })

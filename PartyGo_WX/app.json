@@ -9,6 +9,30 @@
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#a9b7b7",
+    "selectedColor": "#11cd6e",
+    "borderStyle": "white",
+    "list": [
+      {
+        "selectedIconPath": "icon/游戏.png",
+        "iconPath": "icon/游戏.png",
+        "pagePath": "pages/index/index",
+        "text": "游戏"
+      },
+      {
+        "selectedIconPath": "icon/添加.png",
+        "iconPath": "icon/添加.png",
+        "pagePath": "pages/main/main",
+        "text": "发布"
+      },
+      {
+        "selectedIconPath": "icon/加星收藏.png",
+        "iconPath": "icon/加星收藏.png",
+        "pagePath": "pages/index/index",
+        "text": "收藏"
+      }
+    ]
   }
-
 }
