@@ -16,6 +16,8 @@ public interface PartyAbsMapper {
     int insertSelective(PartyAbs record);
 
     List<PartyAbs> selectByExample(PartyAbs example);
+    
+    List<PartyAbs> selectListByPid(String pid);
 
     PartyAbs selectByPrimaryKey(String partyid);
 

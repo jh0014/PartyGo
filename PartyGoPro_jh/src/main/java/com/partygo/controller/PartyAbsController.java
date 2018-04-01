@@ -2,6 +2,7 @@ package com.partygo.controller;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -34,6 +35,33 @@ public class PartyAbsController {
 		JsonResult res = new JsonResult();
 		try {
 			PartyAbs abs =  partyAbsService.getPartyAbsById(pid);
+			if(abs == null) {
+				res.setCode("0001");
+				res.setMessage("返回为空");
+			}
+			else {
+				res.setCode("0000");
+				res.setMessage("返回成功");
+				res.setData(abs);
+			}
+		}
+		catch(Exception e) {
+			res.setCode("0002");
+			res.setMessage("请求异常，error:"+e.getMessage());
+		}
+		
+		return res;
+		
+	}
+	
+	
+	@ApiOperation(value="获取聚会摘要信息List", notes="根据聚会id获取聚会摘要信息List")
+	@ApiImplicitParam(name = "pid", value = "聚会ID", required = true, dataType = "String", paramType = "path")
+	@RequestMapping(value="/partyabsList.json/{pid}",method=RequestMethod.GET)
+	public JsonResult getAbsListByPid(@PathVariable String pid) {
+		JsonResult res = new JsonResult();
+		try {
+			List<PartyAbs> abs =  partyAbsService.getPartyAbsListById(pid);
 			if(abs == null) {
 				res.setCode("0001");
 				res.setMessage("返回为空");

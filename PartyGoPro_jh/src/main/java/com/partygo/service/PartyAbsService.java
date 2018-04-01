@@ -1,5 +1,7 @@
 package com.partygo.service;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -19,5 +21,9 @@ public class PartyAbsService {
 	
 	public int addPartyAbs(PartyAbs record) {
 		return partyAbsMapper.insertSelective(record);
+	}
+	
+	public List<PartyAbs> getPartyAbsListById(String pid) {
+		return partyAbsMapper.selectListByPid(pid);
 	}
 }

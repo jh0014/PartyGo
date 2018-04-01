@@ -87,6 +87,13 @@
       order by ${orderByClause}
     </if>
   </select>
+  
+  <select id="selectListByPid" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from pg_abstract
+    where PARTYID = #{partyid,jdbcType=VARCHAR}
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
