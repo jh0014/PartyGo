@@ -79,7 +79,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from pg_abstract
+    from PG_ABS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -91,27 +91,27 @@
   <select id="selectListByOpenid" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />
-    from pg_abstract
+    from PG_ABS
     where OPENID = #{openid,jdbcType=VARCHAR}
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from pg_abstract
+    from PG_ABS
     where PARTYID = #{partyid,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from pg_abstract
+    delete from PG_ABS
     where PARTYID = #{partyid,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.partygo.model.PartyAbs" >
-    delete from pg_abstract
+    delete from PG_ABS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.partygo.model.PartyAbs" >
-    insert into pg_abstract (PARTYID, OPENID, PARTY_TITLE, 
+    insert into PG_ABS (PARTYID, OPENID, PARTY_TITLE, 
       APPID, CREATE_TIME, UPDATE_TIME,UPDATE_PERSON,PARTY_TIME,STATUS
       )
     values (#{partyid,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, #{partyTitle,jdbcType=VARCHAR}, 
@@ -120,7 +120,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.partygo.model.PartyAbs" >
-    insert into pg_abstract
+    insert into PG_ABS
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="partyid != null" >
         PARTYID,
@@ -181,13 +181,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.partygo.model.PartyAbs" resultType="java.lang.Integer" >
-    select count(*) from pg_abstract
+    select count(*) from PG_ABS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update pg_abstract
+    update PG_ABS
     <set >
       <if test="record.partyid != null" >
         PARTYID = #{record.partyid,jdbcType=VARCHAR},
@@ -222,7 +222,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update pg_abstract
+    update PG_ABS
     set PARTYID = #{record.partyid,jdbcType=VARCHAR},
       OPENID = #{record.openid,jdbcType=VARCHAR},
       PARTY_TITLE = #{record.partyTitle,jdbcType=VARCHAR},
@@ -237,7 +237,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.partygo.model.PartyAbs" >
-    update pg_abstract
+    update PG_ABS
     <set >
       <if test="openid != null" >
         OPENID = #{openid,jdbcType=VARCHAR},
@@ -267,7 +267,7 @@
     where PARTYID = #{partyid,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.partygo.model.PartyAbs" >
-    update pg_abstract
+    update PG_ABS
     set OPENID = #{openid,jdbcType=VARCHAR},
       PARTY_TITLE = #{partyTitle,jdbcType=VARCHAR},
       APPID = #{appid,jdbcType=VARCHAR},
