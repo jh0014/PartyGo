@@ -17,7 +17,7 @@ public interface PartyAbsMapper {
 
     List<PartyAbs> selectByExample(PartyAbs example);
     
-    List<PartyAbs> selectListByPid(String pid);
+    List<PartyAbs> selectListByOpenid(String openid);
 
     PartyAbs selectByPrimaryKey(String partyid);
 

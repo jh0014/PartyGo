@@ -55,13 +55,13 @@ public class PartyAbsController {
 	}
 	
 	
-	@ApiOperation(value="获取聚会摘要信息List", notes="根据聚会id获取聚会摘要信息List")
-	@ApiImplicitParam(name = "pid", value = "聚会ID", required = true, dataType = "String", paramType = "path")
-	@RequestMapping(value="/partyabsList.json/{pid}",method=RequestMethod.GET)
-	public JsonResult getAbsListByPid(@PathVariable String pid) {
+	@ApiOperation(value="获取聚会摘要信息List", notes="根据openid获取聚会摘要信息List")
+	@ApiImplicitParam(name = "openid", value = "聚会ID", required = true, dataType = "String", paramType = "path")
+	@RequestMapping(value="/partyabsList.json/{openid}",method=RequestMethod.GET)
+	public JsonResult getAbsListByPid(@PathVariable String openid) {
 		JsonResult res = new JsonResult();
 		try {
-			List<PartyAbs> abs =  partyAbsService.getPartyAbsListById(pid);
+			List<PartyAbs> abs =  partyAbsService.getPartyAbsListByOpenId(openid);
 			if(abs == null) {
 				res.setCode("0001");
 				res.setMessage("返回为空");

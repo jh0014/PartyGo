@@ -23,7 +23,7 @@ public class PartyAbsService {
 		return partyAbsMapper.insertSelective(record);
 	}
 	
-	public List<PartyAbs> getPartyAbsListById(String pid) {
-		return partyAbsMapper.selectListByPid(pid);
+	public List<PartyAbs> getPartyAbsListByOpenId(String openid) {
+		return partyAbsMapper.selectListByOpenid(openid);
 	}
 }

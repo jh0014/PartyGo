@@ -88,11 +88,11 @@
     </if>
   </select>
   
-  <select id="selectListByPid" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectListByOpenid" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />
     from pg_abstract
-    where PARTYID = #{partyid,jdbcType=VARCHAR}
+    where OPENID = #{openid,jdbcType=VARCHAR}
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
