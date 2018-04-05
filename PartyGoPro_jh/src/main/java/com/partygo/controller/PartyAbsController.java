@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.partygo.common.JsonResult;
 import com.partygo.model.PartyAbs;
 import com.partygo.service.PartyAbsService;
+import com.partygo.util.LogUtil;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -58,7 +59,8 @@ public class PartyAbsController {
 	@ApiOperation(value="获取聚会摘要信息List", notes="根据openid获取聚会摘要信息List")
 	@ApiImplicitParam(name = "openid", value = "聚会ID", required = true, dataType = "String", paramType = "path")
 	@RequestMapping(value="/partyabsList.json/{openid}",method=RequestMethod.GET)
-	public JsonResult getAbsListByPid(@PathVariable String openid) {
+	public JsonResult getAbsListByOpenid(@PathVariable String openid) {
+		LogUtil.info("开始执行getAbsListByPid，openid:"+openid);
 		JsonResult res = new JsonResult();
 		try {
 			List<PartyAbs> abs =  partyAbsService.getPartyAbsListByOpenId(openid);
@@ -75,8 +77,9 @@ public class PartyAbsController {
 		catch(Exception e) {
 			res.setCode("0002");
 			res.setMessage("请求异常，error:"+e.getMessage());
+			LogUtil.error(e, getClass());
 		}
-		
+		LogUtil.info("getAbsListByPid执行结束");
 		return res;
 		
 	}
