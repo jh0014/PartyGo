@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.partygo.dao.PgUserMapper">
+  <resultMap id="BaseResultMap" type="com.partygo.model.PgUser">
+    <id column="OPENID" jdbcType="VARCHAR" property="openid" />
+    <result column="APPID" jdbcType="VARCHAR" property="appid" />
+    <result column="UNIONID" jdbcType="VARCHAR" property="unionid" />
+    <result column="NICKNAME" jdbcType="VARCHAR" property="nickname" />
+    <result column="IMAGE" jdbcType="VARCHAR" property="image" />
+    <result column="PHONENO" jdbcType="VARCHAR" property="phoneno" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" javaType="java.sql.Timestamp"/>
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" javaType="java.sql.Timestamp"/>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    OPENID, APPID, UNIONID, NICKNAME, IMAGE, PHONENO, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" parameterType="com.partygo.model.PgUser" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pg_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pg_user
+    where OPENID = #{openid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from pg_user
+    where OPENID = #{openid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.partygo.model.PgUser">
+    delete from pg_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.partygo.model.PgUser">
+    insert into pg_user (OPENID, APPID, UNIONID, 
+      NICKNAME, IMAGE, PHONENO, 
+      CREATE_TIME, UPDATE_TIME)
+    values (#{openid,jdbcType=VARCHAR}, #{appid,jdbcType=VARCHAR}, #{unionid,jdbcType=VARCHAR}, 
+      #{nickname,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}, #{phoneno,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.partygo.model.PgUser">
+    insert into pg_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="openid != null">
+        OPENID,
+      </if>
+      <if test="appid != null">
+        APPID,
+      </if>
+      <if test="unionid != null">
+        UNIONID,
+      </if>
+      <if test="nickname != null">
+        NICKNAME,
+      </if>
+      <if test="image != null">
+        IMAGE,
+      </if>
+      <if test="phoneno != null">
+        PHONENO,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="openid != null">
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="appid != null">
+        #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="unionid != null">
+        #{unionid,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null">
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneno != null">
+        #{phoneno,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="getCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select count(*) from pg_user
+	where APPID = #{appid,jdbcType=VARCHAR}
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pg_user
+    <set>
+      <if test="record.openid != null">
+        OPENID = #{record.openid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appid != null">
+        APPID = #{record.appid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unionid != null">
+        UNIONID = #{record.unionid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickname != null">
+        NICKNAME = #{record.nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.image != null">
+        IMAGE = #{record.image,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phoneno != null">
+        PHONENO = #{record.phoneno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pg_user
+    set OPENID = #{record.openid,jdbcType=VARCHAR},
+      APPID = #{record.appid,jdbcType=VARCHAR},
+      UNIONID = #{record.unionid,jdbcType=VARCHAR},
+      NICKNAME = #{record.nickname,jdbcType=VARCHAR},
+      IMAGE = #{record.image,jdbcType=VARCHAR},
+      PHONENO = #{record.phoneno,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="update" parameterType="com.partygo.model.PgUser">
+    update pg_user
+    <set>
+      <if test="appid != null">
+        APPID = #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="unionid != null">
+        UNIONID = #{unionid,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        NICKNAME = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null">
+        IMAGE = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneno != null">
+        PHONENO = #{phoneno,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where OPENID = #{openid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.partygo.model.PgUser">
+    update pg_user
+    set APPID = #{appid,jdbcType=VARCHAR},
+      UNIONID = #{unionid,jdbcType=VARCHAR},
+      NICKNAME = #{nickname,jdbcType=VARCHAR},
+      IMAGE = #{image,jdbcType=VARCHAR},
+      PHONENO = #{phoneno,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where OPENID = #{openid,jdbcType=VARCHAR}
+  </update>
+</mapper>

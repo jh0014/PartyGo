@@ -9,11 +9,11 @@ import com.partygo.model.PartyAbs;
 
 public interface PartyAbsMapper {
 
-    int deleteByPrimaryKey(String partyid);
+    Integer deleteByPrimaryKey(String partyid);
 
-    int insert(PartyAbs record);
+    Integer insert(PartyAbs record);
 
-    int insertSelective(PartyAbs record);
+    Integer insertSelective(PartyAbs record);
 
     List<PartyAbs> selectByExample(PartyAbs example);
     
@@ -21,11 +21,11 @@ public interface PartyAbsMapper {
 
     PartyAbs selectByPrimaryKey(String partyid);
 
-    int updateByExampleSelective(@Param("record") PartyAbs record, @Param("example") PartyAbs example);
+    Integer updateByExampleSelective(@Param("record") PartyAbs record, @Param("example") PartyAbs example);
 
-    int updateByExample(@Param("record") PartyAbs record, @Param("example") PartyAbs example);
+    Integer updateByExample(@Param("record") PartyAbs record, @Param("example") PartyAbs example);
 
-    int updateByPrimaryKeySelective(PartyAbs record);
+    Integer updateByPrimaryKeySelective(PartyAbs record);
 
-    int updateByPrimaryKey(PartyAbs record);
+    Integer updateByPrimaryKey(PartyAbs record);
 }

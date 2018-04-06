@@ -13,7 +13,7 @@ public class LogUtil {
 	}
 	
 	public static void error(Exception e, Class<?> clazz){
-        Logger logger  =  LoggerFactory.getLogger(clazz);
+        Logger logger  =  LoggerFactory.getLogger("system_error");
 
         StringBuffer logOut = new StringBuffer();
         logOut.append("\n");
