@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.partygo.dao.PgFriendMapper" >
+  <resultMap id="BaseResultMap" type="com.partygo.model.PgFriend" >
+    <result column="APPID" property="appid" jdbcType="VARCHAR" />
+    <result column="OPENID1" property="openid1" jdbcType="VARCHAR" />
+    <result column="OPENID2" property="openid2" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" javaType="java.sql.Timestamp"/>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    APPID, OPENID1, OPENID2, CREATE_TIME
+  </sql>
+  <select id="selectCountByOpenid" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select count(*) from pg_friend
+	where APPID = #{appid,jdbcType=VARCHAR} and OPENID1 = #{openid1,jdbcType=VARCHAR} and OPENID2 = #{openid2,jdbcType=VARCHAR}
+  </select>
+  <insert id="insert" parameterType="com.partygo.model.PgFriend" >
+    insert into pg_friend (APPID, OPENID1, OPENID2, 
+      CREATE_TIME)
+    values (#{appid,jdbcType=VARCHAR}, #{openid1,jdbcType=VARCHAR}, #{openid2,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.partygo.model.PgFriend" >
+    insert into pg_friend
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="appid != null" >
+        APPID,
+      </if>
+      <if test="openid1 != null" >
+        OPENID1,
+      </if>
+      <if test="openid2 != null" >
+        OPENID2,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="appid != null" >
+        #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="openid1 != null" >
+        #{openid1,jdbcType=VARCHAR},
+      </if>
+      <if test="openid2 != null" >
+        #{openid2,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

@@ -4,7 +4,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.partygo.dao.PgUserMapper;
+import com.partygo.dao.PgUserInfoMapper;
 import com.partygo.model.PgUser;
 import com.partygo.util.LogUtil;
 
@@ -12,7 +12,7 @@ import com.partygo.util.LogUtil;
 public class PgUserService {
 
 	@Resource
-	private PgUserMapper pgUserMapper;
+	private PgUserInfoMapper pgUserMapper;
 	
 	public Integer saveOrUpdatePgUser(PgUser user) {
 		try {
