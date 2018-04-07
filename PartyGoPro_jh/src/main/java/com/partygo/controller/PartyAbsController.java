@@ -144,6 +144,8 @@ public class PartyAbsController {
 		return res;
 	}
 	
+	//删除
+	
 	@RequestMapping(value="/index",method=RequestMethod.GET)
 	public String index() {
 		return "hi";
