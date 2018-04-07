@@ -30,7 +30,6 @@ public class PartyAbsController {
 	private PartyAbsService partyAbsService;
 	
 	@ApiOperation(value="获取聚会摘要信息", notes="根据聚会id获取聚会摘要信息")
-	@ApiImplicitParam(name = "pid", value = "聚会ID", required = true, dataType = "String", paramType = "path")
 	@RequestMapping(value="/partyabs.json/{pid}",method=RequestMethod.GET)
 	public JsonResult getAbsByPid(@PathVariable String pid) {
 		LogUtil.info("执行getAbsByPid,pid="+pid);
@@ -61,7 +60,6 @@ public class PartyAbsController {
 	
 	
 	@ApiOperation(value="获取聚会摘要信息List", notes="根据openid获取聚会摘要信息List")
-	@ApiImplicitParam(name = "openid", value = "聚会ID", required = true, dataType = "String", paramType = "path")
 	@RequestMapping(value="/partyabsList.json/{openid}",method=RequestMethod.GET)
 	public JsonResult getAbsListByOpenid(@PathVariable String openid) {
 		LogUtil.info("开始执行getAbsListByPid，openid:"+openid);
