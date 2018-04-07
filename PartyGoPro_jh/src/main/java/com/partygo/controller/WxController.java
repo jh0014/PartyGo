@@ -7,11 +7,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.alibaba.fastjson.JSONObject;
 import com.partygo.common.JsonResult;
 import com.partygo.config.WxConfig;
+import com.partygo.service.PgStatisService;
 import com.partygo.service.WxJs2CodeService;
 import com.partygo.util.LogUtil;
+
 import io.swagger.annotations.ApiOperation;
 
 @RestController
@@ -23,6 +26,8 @@ public class WxController {
 	private WxJs2CodeService wxJs2CodeService;
 	@Resource
 	private WxConfig wxConfig;
+	@Resource
+	private PgStatisService pgStatisService;
 	
 	@ApiOperation(value="获取用户openid", notes="获取用户openid")
 	@PostMapping(value="/js2session.json")
@@ -72,6 +77,7 @@ public class WxController {
 			LogUtil.error(e, getClass());
 		}
 		LogUtil.info("js2session执行结束");
+		pgStatisService.statisCall("js2session", res.getCode(), res.getMessage());
 		return res;
 		
 	}

@@ -2,7 +2,7 @@ package com.partygo.dao;
 
 import com.partygo.model.PgUser;
 
-public interface PgUserInfoMapper {
+public interface PgUserMapper {
   
     Integer insertSelective(PgUser record);
 

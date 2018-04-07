@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.partygo.common.JsonResult;
 import com.partygo.config.WxConfig;
 import com.partygo.model.PgUser;
+import com.partygo.service.PgStatisService;
 import com.partygo.service.PgUserService;
 import com.partygo.util.LogUtil;
 
@@ -28,6 +29,8 @@ public class PgUserController {
 	private PgUserService pgUserService;
 	@Resource
 	private WxConfig wxConfig;
+	@Resource
+	private PgStatisService pgStatisService;
 	
 	@ApiOperation(value="保存/更新用户信息", notes="保存/更新用户信息")
 	@RequestMapping(value="/saveOrUpdatePgUser.json",method=RequestMethod.POST)
@@ -71,6 +74,7 @@ public class PgUserController {
 			LogUtil.error(new Exception(e), getClass());
 		}
 		LogUtil.info("savePgUesrInfo执行结束");
+		pgStatisService.statisCall("saveOrUpdatePgUser", res.getCode(), res.getMessage());
 		return res;
 	}
 	
@@ -100,6 +104,7 @@ public class PgUserController {
 			LogUtil.error(e, getClass());
 		}
 		LogUtil.info("getPgUserCount执行结束");
+		pgStatisService.statisCall("getCount", res.getCode(), res.getMessage());
 		return res;
 		
 	}

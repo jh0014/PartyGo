@@ -15,6 +15,7 @@ import com.partygo.common.JsonResult;
 import com.partygo.config.WxConfig;
 import com.partygo.model.PgFriend;
 import com.partygo.service.PgFriendService;
+import com.partygo.service.PgStatisService;
 import com.partygo.util.LogUtil;
 
 import io.swagger.annotations.ApiOperation;
@@ -29,6 +30,8 @@ public class PgFriendController {
 	private PgFriendService pgFriendService;
 	@Resource
 	private WxConfig wxConfig;
+	@Resource
+	private PgStatisService pgStatisService;
 
 	@ApiOperation(value="保存好友关系信息", notes="保存好友关系信息")
 	@RequestMapping(value="/savePgFriend.json",method=RequestMethod.POST)
@@ -81,6 +84,7 @@ public class PgFriendController {
 			res.setMessage("请求异常");
 			LogUtil.error(new Exception(e), getClass());
 		}
+		pgStatisService.statisCall("savePgFriend", res.getCode(), res.getMessage());
 		LogUtil.info("savePgFriend执行结束");
 		return res;
 	}

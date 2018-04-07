@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.partygo.common.JsonResult;
+import com.partygo.config.WxConfig;
 import com.partygo.model.PartyAbs;
 import com.partygo.service.PartyAbsService;
+import com.partygo.service.PgStatisService;
 import com.partygo.util.LogUtil;
+import com.partygo.util.UuidUtil;
 
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
@@ -28,6 +30,10 @@ public class PartyAbsController {
 	
 	@Resource
 	private PartyAbsService partyAbsService;
+	@Resource
+	private PgStatisService pgStatisService;
+	@Resource
+	private WxConfig wxConfig;
 	
 	@ApiOperation(value="获取聚会摘要信息", notes="根据聚会id获取聚会摘要信息")
 	@RequestMapping(value="/partyabs.json/{pid}",method=RequestMethod.GET)
@@ -53,6 +59,7 @@ public class PartyAbsController {
 			res.setMessage("请求异常，error:"+e.getMessage());
 			LogUtil.error(e, getClass());
 		}
+		pgStatisService.statisCall("partyabs", res.getCode(), res.getMessage());
 		LogUtil.info("getAbsByPid执行结束");
 		return res;
 		
@@ -84,12 +91,13 @@ public class PartyAbsController {
 			LogUtil.error(e, getClass());
 		}
 		LogUtil.info("getAbsListByPid执行结束");
+		pgStatisService.statisCall("partyabsList", res.getCode(), res.getMessage());
 		return res;
 		
 	}
 	
 	@ApiOperation(value="添加聚会摘要信息", notes="添加聚会摘要信息")
-	@RequestMapping(value="/AddPartyAbs.json",method=RequestMethod.POST)
+	@RequestMapping(value="/addPartyAbs.json",method=RequestMethod.POST)
 	public JsonResult addAbs(@RequestBody PartyAbs pa) {
 		LogUtil.info("执行addAbs");
 		JsonResult res = new JsonResult();
@@ -104,6 +112,8 @@ public class PartyAbsController {
 				Timestamp nousedate = new Timestamp(date.getTime());
 				pa.setCreateTime(nousedate);
 				pa.setUpdateTime(nousedate);
+				pa.setAppid(wxConfig.getAppid());
+				pa.setPartyid(UuidUtil.getIdByUUId());
 				Integer count = partyAbsService.addPartyAbs(pa);
 				if(count == null) {
 					res.setCode("0002");
@@ -130,6 +140,7 @@ public class PartyAbsController {
 			LogUtil.error(e, getClass());
 		}
 		LogUtil.info("addAbs执行结束");
+		pgStatisService.statisCall("addPartyAbs", res.getCode(), res.getMessage());
 		return res;
 	}
 	
