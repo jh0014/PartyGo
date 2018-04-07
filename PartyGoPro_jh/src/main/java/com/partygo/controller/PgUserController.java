@@ -6,18 +6,17 @@ import java.util.Date;
 import javax.annotation.Resource;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.partygo.common.JsonResult;
+import com.partygo.config.WxConfig;
 import com.partygo.model.PgUser;
 import com.partygo.service.PgUserService;
 import com.partygo.util.LogUtil;
 
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
@@ -27,10 +26,12 @@ public class PgUserController {
 
 	@Resource
 	private PgUserService pgUserService;
+	@Resource
+	private WxConfig wxConfig;
 	
-	@ApiOperation(value="保存用户信息", notes="保存用户信息")
-	@RequestMapping(value="/savePgUser.json",method=RequestMethod.POST)
-	public JsonResult savePgUesrInfo(@RequestBody PgUser user) {
+	@ApiOperation(value="保存/更新用户信息", notes="保存/更新用户信息")
+	@RequestMapping(value="/saveOrUpdatePgUser.json",method=RequestMethod.POST)
+	public JsonResult saveOrUpdatePgUesrInfo(@RequestBody PgUser user) {
 		LogUtil.info("执行savePgUesrInfo");
 		JsonResult res = new JsonResult();
 		try {
@@ -44,7 +45,7 @@ public class PgUserController {
 				Timestamp nousedate = new Timestamp(date.getTime());
 				user.setCreateTime(nousedate);
 				user.setUpdateTime(nousedate);
-				Integer count = pgUserService.savePgUser(user);
+				Integer count = pgUserService.saveOrUpdatePgUser(user);
 				if(count == null) {
 					res.setCode("0002");
 					res.setMessage("保存用户信息异常，count = null");
@@ -74,10 +75,10 @@ public class PgUserController {
 	}
 	
 	@ApiOperation(value="获取用户数量", notes="获取用户数量")
-	@ApiImplicitParam(name = "appid", value = "应用ID", required = true, dataType = "String", paramType = "path")
-	@RequestMapping(value="/getCount.json/{appid}",method=RequestMethod.GET)
-	public JsonResult getPgUserCount(@PathVariable String appid) {
+	@RequestMapping(value="/getCount.json",method=RequestMethod.GET)
+	public JsonResult getPgUserCount() {
 		LogUtil.info("执行getPgUserCount");
+		String appid = wxConfig.getAppid();
 		JsonResult res = new JsonResult();
 		try {
 			Integer count =  pgUserService.getCount(appid);
@@ -103,48 +104,4 @@ public class PgUserController {
 		
 	}
 	
-	@ApiOperation(value="更新用户信息", notes="更新用户信息")
-	@RequestMapping(value="updatePgUser.json",method=RequestMethod.POST)
-	public JsonResult updatePgUserInfo(@RequestBody PgUser user) {
-		LogUtil.info("执行updatePgUserInfo");
-		JsonResult res = new JsonResult();
-		try {
-			if(user == null) {
-				res.setCode("0001");
-				res.setMessage("请求数据为空");
-				LogUtil.error(new Exception("用户信息为空"), getClass());
-			}
-			else {
-				Date date = new Date();       
-				Timestamp nousedate = new Timestamp(date.getTime());
-				user.setCreateTime(nousedate);
-				user.setUpdateTime(nousedate);
-				Integer count = pgUserService.updatePgUser(user);
-				if(count == null) {
-					res.setCode("0002");
-					res.setMessage("更新用户信息异常，count = null");
-					LogUtil.error(new Exception("pgUserService.updatePgUser返回count=null"), getClass());
-				}
-				else {
-					if(count == 1) {
-						res.setCode("0000");
-						res.setMessage("更新用户信息成功");
-						LogUtil.info("更新用户信息成功");
-					}
-					else {
-						res.setCode("0003");
-						res.setMessage("更新用户信息失败");
-						LogUtil.error(new Exception("pgUserService.updatePgUser返回count="+count), getClass());
-					}
-				}
-			}
-		}
-		catch(Exception e) {
-			res.setCode("0002");
-			res.setMessage("请求异常");
-			LogUtil.error(e, getClass());
-		}
-		LogUtil.info("updatePgUserInfo执行结束");
-		return res;
-	}
 }
