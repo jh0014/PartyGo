@@ -8,6 +8,8 @@ public class PgDetail {
     private String partyid;
 
     private String partyTitle;
+    
+    private String openid;
 
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
     private Date partyTime;
@@ -87,4 +89,14 @@ public class PgDetail {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+	public String getOpenid() {
+		return openid;
+	}
+
+	public void setOpenid(String openid) {
+		this.openid = openid;
+	}
+    
+    
 }

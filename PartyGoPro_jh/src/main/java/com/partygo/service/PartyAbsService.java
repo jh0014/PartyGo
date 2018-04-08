@@ -57,4 +57,17 @@ public class PartyAbsService {
 			throw e;
 		}
 	}
+	
+	public Integer deletePartAbsById(String pid) {
+		try {
+			if(pid == null)
+				return null;
+			return partyAbsMapper.deleteByPrimaryKey(pid);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			LogUtil.error(e, getClass());
+			throw e;
+		}
+	}
 }

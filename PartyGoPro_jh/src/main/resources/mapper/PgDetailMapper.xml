@@ -3,6 +3,7 @@
 <mapper namespace="com.partygo.dao.PgDetailMapper" >
   <resultMap id="BaseResultMap" type="com.partygo.model.PgDetail" >
     <id column="PARTYID" property="partyid" jdbcType="VARCHAR" />
+    <result column="OPENID" property="openid" jdbcType="VARCHAR" />
     <result column="PARTY_TITLE" property="partyTitle" jdbcType="VARCHAR" />
     <result column="PARTY_TIME" property="partyTime" jdbcType="TIMESTAMP" javaType="java.sql.Timestamp"/>
     <result column="PARTY_ADDRESS" property="partyAddress" jdbcType="VARCHAR" />
@@ -70,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    PARTYID, PARTY_TITLE, PARTY_TIME, PARTY_ADDRESS, PARTY_SOUND, PARTY_IMG, CREATE_TIME, 
+    PARTYID, OPENID,PARTY_TITLE, PARTY_TIME, PARTY_ADDRESS, PARTY_SOUND, PARTY_IMG, CREATE_TIME, 
     UPDATE_TIME
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
@@ -79,11 +80,15 @@
     from pg_detail
     where PARTYID = #{partyid,jdbcType=VARCHAR}
   </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from pg_detail
+    where PARTYID = #{partyid,jdbcType=VARCHAR}
+  </delete>
   <insert id="insert" parameterType="com.partygo.model.PgDetail" >
-    insert into pg_detail (PARTYID, PARTY_TITLE, PARTY_TIME, 
+    insert into pg_detail (PARTYID, OPENID, PARTY_TITLE, PARTY_TIME, 
       PARTY_ADDRESS, PARTY_SOUND, PARTY_IMG, 
       CREATE_TIME, UPDATE_TIME)
-    values (#{partyid,jdbcType=VARCHAR}, #{partyTitle,jdbcType=VARCHAR}, #{partyTime,jdbcType=TIMESTAMP}, 
+    values (#{partyid,jdbcType=VARCHAR}, (#{openid,jdbcType=VARCHAR}, #{partyTitle,jdbcType=VARCHAR}, #{partyTime,jdbcType=TIMESTAMP}, 
       #{partyAddress,jdbcType=VARCHAR}, #{partySound,jdbcType=VARCHAR}, #{partyImg,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
@@ -92,6 +97,9 @@
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="partyid != null" >
         PARTYID,
+      </if>
+      <if test="openid != null" >
+        OPENID,
       </if>
       <if test="partyTitle != null" >
         PARTY_TITLE,
@@ -119,6 +127,9 @@
       <if test="partyid != null" >
         #{partyid,jdbcType=VARCHAR},
       </if>
+      <if test="openid != null" >
+        #{openid,jdbcType=VARCHAR},
+      </if>
       <if test="partyTitle != null" >
         #{partyTitle,jdbcType=VARCHAR},
       </if>
@@ -145,6 +156,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.partygo.model.PgDetail" >
     update pg_detail
     <set >
+      <if test="openid != null" >
+        OPENID = #{openid,jdbcType=VARCHAR},
+      </if>
       <if test="partyTitle != null" >
         PARTY_TITLE = #{partyTitle,jdbcType=VARCHAR},
       </if>
@@ -176,6 +190,7 @@
       PARTY_ADDRESS = #{partyAddress,jdbcType=VARCHAR},
       PARTY_SOUND = #{partySound,jdbcType=VARCHAR},
       PARTY_IMG = #{partyImg,jdbcType=VARCHAR},
+      OPENID = #{openid,jdbcType=VARCHAR},
       CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
       UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
     where PARTYID = #{partyid,jdbcType=VARCHAR}

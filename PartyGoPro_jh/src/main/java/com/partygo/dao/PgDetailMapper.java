@@ -4,13 +4,15 @@ import com.partygo.model.PgDetail;
 
 public interface PgDetailMapper {
 
-    int insert(PgDetail record);
+	Integer insert(PgDetail record);
 
-    int insertSelective(PgDetail record);
+    Integer insertSelective(PgDetail record);
 
     PgDetail selectByPrimaryKey(String partyid);
 
-    int updateByPrimaryKeySelective(PgDetail record);
+    Integer updateByPrimaryKeySelective(PgDetail record);
 
-    int updateByPrimaryKey(PgDetail record);
+    Integer updateByPrimaryKey(PgDetail record);
+    
+    Integer deleteByPrimaryKey(String partyid);
 }

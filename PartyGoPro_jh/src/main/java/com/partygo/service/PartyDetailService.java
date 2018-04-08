@@ -51,4 +51,17 @@ public class PartyDetailService {
 			throw e;
 		}
 	}
+	
+	public Integer deleteDetailById(String pid) {
+		try {
+			if(pid == null)
+				return null;
+			return pgDetailMapper.deleteByPrimaryKey(pid);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			LogUtil.error(e, getClass());
+			throw e;
+		}
+	}
 }

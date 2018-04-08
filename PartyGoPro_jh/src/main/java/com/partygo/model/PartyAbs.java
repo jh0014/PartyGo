@@ -1,6 +1,7 @@
 package com.partygo.model;
 
-import java.sql.Timestamp;
+
+import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -19,19 +20,19 @@ public class PartyAbs {
 	private Integer status;
     
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
-    private Timestamp partyTime;
+    private Date partyTime;
     
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
-    private Timestamp createTime;
+    private Date createTime;
 
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
-    private Timestamp updateTime;
+    private Date updateTime;
     
-    public Timestamp getPartyTime() {
+    public Date getPartyTime() {
 		return partyTime;
 	}
 
-	public void setPartyTime(Timestamp partyTime) {
+	public void setPartyTime(Date partyTime) {
 		this.partyTime = partyTime;
 	}
 
@@ -84,19 +85,19 @@ public class PartyAbs {
         this.appid = appid == null ? null : appid.trim();
     }
 
-    public Timestamp getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Timestamp createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
-    public Timestamp getUpdateTime() {
+    public Date getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Timestamp updateTime) {
+    public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
 }
