@@ -18,6 +18,10 @@ public class PartyAbs {
     private String upperson;
     
 	private Integer status;
+	
+	private String creator;
+	
+	private Integer isexpire;
     
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
     private Date partyTime;
@@ -85,7 +89,23 @@ public class PartyAbs {
         this.appid = appid == null ? null : appid.trim();
     }
 
-    public Date getCreateTime() {
+    public String getCreator() {
+		return creator;
+	}
+
+	public void setCreator(String creator) {
+		this.creator = creator == null ? null : creator.trim();
+	}
+
+	public Integer getIsexpire() {
+		return isexpire;
+	}
+
+	public void setIsexpire(Integer isexpire) {
+		this.isexpire = isexpire;
+	}
+
+	public Date getCreateTime() {
         return createTime;
     }
 

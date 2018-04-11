@@ -73,17 +73,17 @@ public class PartyController {
 	//删除
 	@ApiOperation(value="删除聚会信息", notes="删除聚会摘要信息/详细信息")
 	@RequestMapping(value="/delParty.json",method=RequestMethod.POST)
-	public JsonResult delParty(@RequestBody String pid) {
+	public JsonResult delParty(@RequestBody String pid, @RequestBody String openid) {
 		LogUtil.info("执行delParty");
 		JsonResult res = new JsonResult();
 		try {
-			if(pid == null || pid.isEmpty()) {
+			if(pid == null || pid.isEmpty()||openid == null || openid.isEmpty()) {
 				res.setCode("0001");
 				res.setMessage("请求数据为空");
 				LogUtil.error(new Exception("请求参数为空"), getClass());
 			}
 			else {
-				Integer delRes = partyService.deletePartyInfo(pid);
+				Integer delRes = partyService.deletePartyInfo(pid,openid);
 				if(delRes == null || delRes == 0) {
 					res.setCode("0003");
 					res.setMessage("聚会信息删除失败,partyService.deletePartyInfo返回delRes="+delRes);
@@ -135,6 +135,8 @@ public class PartyController {
 				abs.setUpperson(detail.getOpenid());
 				abs.setStatus(1);
 				abs.setUpdateTime(nousedate);
+				abs.setIsexpire(0);
+				abs.setCreator(detail.getOpenid());
 				
 				Integer saveRes = partyService.publishParty(abs, detail);
 				if(saveRes == null || saveRes == 0) {

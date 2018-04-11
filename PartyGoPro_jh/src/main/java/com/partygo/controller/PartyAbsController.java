@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.partygo.common.JsonResult;
@@ -36,8 +37,8 @@ public class PartyAbsController {
 	private WxConfig wxConfig;
 	
 	@ApiOperation(value="获取聚会摘要信息", notes="根据聚会id获取聚会摘要信息")
-	@RequestMapping(value="/partyabs.json/{pid}",method=RequestMethod.GET)
-	public JsonResult getAbsByPid(@PathVariable String pid) {
+	@RequestMapping(value="/partyabs.json}",method=RequestMethod.GET)
+	public JsonResult getAbsByPid(@RequestParam  String pid) {
 		LogUtil.info("执行getAbsByPid,pid="+pid);
 		JsonResult res = new JsonResult();
 		try {

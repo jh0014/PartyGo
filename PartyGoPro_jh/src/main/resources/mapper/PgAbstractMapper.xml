@@ -94,7 +94,7 @@
     from PG_ABS
     where OPENID = #{openid,jdbcType=VARCHAR}
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
     select 
     <include refid="Base_Column_List" />
     from PG_ABS
@@ -239,9 +239,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.partygo.model.PartyAbs" >
     update PG_ABS
     <set >
-      <if test="openid != null" >
-        OPENID = #{openid,jdbcType=VARCHAR},
-      </if>
       <if test="partyTitle != null" >
         PARTY_TITLE = #{partyTitle,jdbcType=VARCHAR},
       </if>
@@ -268,14 +265,23 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.partygo.model.PartyAbs" >
     update PG_ABS
-    set OPENID = #{openid,jdbcType=VARCHAR},
+    set 
       PARTY_TITLE = #{partyTitle,jdbcType=VARCHAR},
       APPID = #{appid,jdbcType=VARCHAR},
       UPDATE_PERSON = #{upperson,jdbcType=VARCHAR},
       CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
       UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
       PARTY_TIME = #{partyTime,jdbcType=TIMESTAMP},
-      STATUS = #{status,jdbcType=INTEGER}
+      STATUS = #{status,jdbcType=INTEGER},
+      CREATOR = #{creator,jdbcType=VARCHAR},
+      IS_EXPIRE = #{isexpire,jdbcType=INTEGER}
     where PARTYID = #{partyid,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateAbsStatus">
+    update PG_ABS
+    set 
+      STATUS = #{arg2}
+    where PARTYID = #{arg0} and OPENID = #{arg1}
   </update>
 </mapper>

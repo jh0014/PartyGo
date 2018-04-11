@@ -28,4 +28,6 @@ public interface PartyAbsMapper {
     Integer updateByPrimaryKeySelective(PartyAbs record);
 
     Integer updateByPrimaryKey(PartyAbs record);
+    
+    Integer updateAbsStatus(String partyid, String openid, Integer status);
 }

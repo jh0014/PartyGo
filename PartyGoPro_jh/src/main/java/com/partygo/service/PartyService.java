@@ -22,16 +22,15 @@ public class PartyService {
 	private PgDetailMapper pgDetailMapper;
 	
 	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT) 
-	public Integer deletePartyInfo(String pid) {
+	public Integer deletePartyInfo(String pid,String openid) {
 		try {
 			if(pid == null) {
 				return 0;
 			}
+			//待修改，follow表操作
+			Integer absRes = partyAbsMapper.updateAbsStatus(pid,openid,0);
 			
-			Integer absRes = partyAbsMapper.deleteByPrimaryKey(pid);
-			Integer detailRes = pgDetailMapper.deleteByPrimaryKey(pid);
-			
-			return absRes & detailRes;
+			return absRes;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
