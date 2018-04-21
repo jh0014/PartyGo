@@ -37,7 +37,7 @@ public class PartyAbsController {
 	private WxConfig wxConfig;
 	
 	@ApiOperation(value="获取聚会摘要信息", notes="根据聚会id获取聚会摘要信息")
-	@RequestMapping(value="/partyabs.json}",method=RequestMethod.GET)
+	@RequestMapping(value="/partyabs.json",method=RequestMethod.GET)
 	public JsonResult getAbsByPid(@RequestParam  String pid) {
 		LogUtil.info("执行getAbsByPid,pid="+pid);
 		JsonResult res = new JsonResult();
