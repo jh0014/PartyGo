@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
+import com.mysql.jdbc.StringUtils;
 import com.partygo.common.JsonResult;
 import com.partygo.config.WxConfig;
 import com.partygo.model.PartyAbs;
@@ -80,7 +81,7 @@ public class PartyController {
 		try {
 			String pid = JSON.parseObject(obj).getString("partyid");
 			String openid = JSON.parseObject(obj).getString("openid");
-			if(pid == null || pid.isEmpty()||openid == null || openid.isEmpty()) {
+			if(StringUtils.isNullOrEmpty(pid) || StringUtils.isNullOrEmpty(openid)) {
 				res.setCode("0001");
 				res.setMessage("请求数据为空");
 				LogUtil.error(new Exception("请求参数为空"), getClass());

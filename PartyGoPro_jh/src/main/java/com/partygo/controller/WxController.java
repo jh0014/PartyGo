@@ -1,6 +1,7 @@
 package com.partygo.controller;
 
-import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import javax.annotation.Resource;
 
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
+import com.mysql.jdbc.StringUtils;
 import com.partygo.common.JsonResult;
 import com.partygo.config.WxConfig;
 import com.partygo.service.PgStatisService;
@@ -72,12 +74,20 @@ public class WxController {
 				else {
 					//将openid洗白
 					String md5Openid = MD5Util.MD5(openid);
-					String outOpenid = md5Openid + new Date().getTime();
-					//存储洗白openid和openid的映射
-					redisService.hashSet(outOpenid, "openid", openid);
+					String TimeNow = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());  
+					String outOpenid = md5Openid + TimeNow;
+					//查询redis是否存在缓存openid
+					String tmpOpenid = (String) redisService.hashGet(outOpenid, "openid");
+					String tmpSessionKey = (String) redisService.hashGet(outOpenid, "sessionkey");
+					if(StringUtils.isNullOrEmpty(tmpOpenid) || StringUtils.isNullOrEmpty(tmpSessionKey)){
+						//存储洗白openid和openid的映射
+						redisService.hashSet(outOpenid, "openid", openid, 24);
+						redisService.hashSet(outOpenid, "sessionkey", sessionKey, 24);
+					}
+					
 					res.setCode("0000");
 					res.setMessage("获取openid成功");
-					res.setData(outOpenid);
+					res.setData(md5Openid);
 					LogUtil.info("获取openid成功");
 				}
 			}

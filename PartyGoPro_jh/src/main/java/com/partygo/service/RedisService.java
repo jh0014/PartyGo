@@ -75,6 +75,17 @@ public class RedisService {
         return result;
     }
 	
+	public void hashSet(String key, Object hashKey, Object value, int expireTime){
+        try {
+			HashOperations<Serializable, Object, Object>  hash = redisTemplate.opsForHash();
+			hash.put(key,hashKey,value);
+			redisTemplate.expire(key, expireTime, TimeUnit.HOURS);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+	
 	public void hashSet(String key, Object hashKey, Object value){
         HashOperations<Serializable, Object, Object>  hash = redisTemplate.opsForHash();
         hash.put(key,hashKey,value);
