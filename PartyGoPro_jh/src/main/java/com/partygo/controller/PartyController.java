@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSON;
 import com.partygo.common.JsonResult;
 import com.partygo.config.WxConfig;
 import com.partygo.model.PartyAbs;
@@ -73,10 +74,12 @@ public class PartyController {
 	//删除
 	@ApiOperation(value="删除聚会信息", notes="删除聚会摘要信息/详细信息")
 	@RequestMapping(value="/delParty.json",method=RequestMethod.POST)
-	public JsonResult delParty(@RequestBody String pid, @RequestBody String openid) {
+	public JsonResult delParty(@RequestBody String obj) {
 		LogUtil.info("执行delParty");
 		JsonResult res = new JsonResult();
 		try {
+			String pid = JSON.parseObject(obj).getString("partyid");
+			String openid = JSON.parseObject(obj).getString("openid");
 			if(pid == null || pid.isEmpty()||openid == null || openid.isEmpty()) {
 				res.setCode("0001");
 				res.setMessage("请求数据为空");
