@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.partygo.common.JsonResult;
-import com.partygo.service.RedisTestService;
+import com.partygo.service.RedisService;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -21,17 +21,17 @@ import io.swagger.annotations.ApiOperation;
 public class RedisTestController {
 
 	@Resource
-	private RedisTestService redisTestService;
+	private RedisService redisService;
 	
 	@ApiOperation(value="redis test", notes="redis test")
 	@RequestMapping(value="/testRedis.json",method=RequestMethod.POST)
 	public JsonResult setString(@RequestBody String obj) {
 		JsonResult res = new JsonResult();
 		JSONObject json = JSON.parseObject(obj);
-		redisTestService.setString(json.getString("key"), json.getString("value"));
+		redisService.hashSet(json.getString("key"), "hash1", json.getString("value"));
 		res.setCode("0000");
 		res.setMessage("ok");
-		res.setData(redisTestService.getString(json.getString("key")));
+		res.setData(redisService.hashGet(json.getString("key"), "hash1"));
 		return res;
 	}
 }
