@@ -1,5 +1,7 @@
 package com.partygo.controller;
 
+import java.util.Date;
+
 import javax.annotation.Resource;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -12,8 +14,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.partygo.common.JsonResult;
 import com.partygo.config.WxConfig;
 import com.partygo.service.PgStatisService;
+import com.partygo.service.RedisService;
 import com.partygo.service.WxJs2CodeService;
 import com.partygo.util.LogUtil;
+import com.partygo.util.MD5Util;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -28,6 +32,8 @@ public class WxController {
 	private WxConfig wxConfig;
 	@Resource
 	private PgStatisService pgStatisService;
+	@Resource
+	private RedisService redisService;
 	
 	@ApiOperation(value="获取用户openid", notes="获取用户openid")
 	@PostMapping(value="/js2session.json")
@@ -64,9 +70,14 @@ public class WxController {
 					LogUtil.error(new Exception("获取openid失败，wx返回错误，errcode="+errcode+",errormsg="+errmsg), getClass());
 				}
 				else {
+					//将openid洗白
+					String md5Openid = MD5Util.MD5(openid);
+					String outOpenid = md5Openid + new Date().getTime();
+					//存储洗白openid和openid的映射
+					redisService.hashSet(outOpenid, "openid", openid);
 					res.setCode("0000");
 					res.setMessage("获取openid成功");
-					res.setData(wxRes);
+					res.setData(outOpenid);
 					LogUtil.info("获取openid成功");
 				}
 			}
