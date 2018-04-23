@@ -3,6 +3,7 @@ package com.partygo.service;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.partygo.dao.PgUserMapper;
 import com.partygo.model.PgUser;
@@ -44,5 +45,27 @@ public class PgUserService {
 			LogUtil.error(e, getClass());
 			throw e;
 		}
+	}
+	
+	public PgUser getUser(String openid) {
+		try {
+			return pgUserMapper.selectByPrimaryKey(openid);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			LogUtil.error(e, getClass());
+			throw e;
+		}
+	}
+	
+	public boolean needUpdate(PgUser user1, PgUser user2) {
+		if(user1 == null || user2 == null)
+			return true;
+		if(!user1.getNickname().equals(user2.getNickname()))
+			return true;
+		else if(!user1.getImage().equals(user2.getImage()))
+			return true;
+		else
+			return false;
 	}
 }
