@@ -147,7 +147,7 @@ public class PartyAbsController {
 	
 	@RequestMapping(value="/index",method=RequestMethod.GET)
 	public String index() {
-		return "hi";
+		return "hi~partygo项目就要上线了，你还在等什么~";
 	}
 	
 

@@ -3,7 +3,6 @@ package com.partygo.service;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import com.partygo.dao.PgUserMapper;
 import com.partygo.model.PgUser;
