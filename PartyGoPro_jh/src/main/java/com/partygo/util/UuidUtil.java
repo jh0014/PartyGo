@@ -1,5 +1,7 @@
 package com.partygo.util;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 import java.util.UUID;
 
@@ -16,4 +18,10 @@ public class UuidUtil {
         // d 代表参数为正数型
         return first + String.format("%015d", hashCodeV);
     }
+	
+	public static String generateRoomId(String openid,Date date) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		String time = sdf.format(date); 
+		return openid+"_"+time;
+	}
 }

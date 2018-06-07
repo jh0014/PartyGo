@@ -91,8 +91,8 @@ public class WxController {
 					String tmpSessionKey = (String) redisService.hashGet(outOpenid, "sessionkey");
 					if(StringUtils.isNullOrEmpty(tmpOpenid) || StringUtils.isNullOrEmpty(tmpSessionKey)){
 						//存储洗白openid和openid的映射
-						redisService.hashSet(outOpenid, "openid", openid, 24);
-						redisService.hashSet(outOpenid, "sessionkey", sessionKey, 24);
+						redisService.hashSet(outOpenid, "openid", openid, 24, "hour");
+						redisService.hashSet(outOpenid, "sessionkey", sessionKey, 24, "hour");
 					}
 					
 					res.setCode("0000");

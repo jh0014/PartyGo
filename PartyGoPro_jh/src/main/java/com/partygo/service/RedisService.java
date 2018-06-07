@@ -75,11 +75,17 @@ public class RedisService {
         return result;
     }
 	
-	public void hashSet(String key, Object hashKey, Object value, int expireTime){
+	public void hashSet(String key, Object hashKey, Object value, int expireTime, String type){
         try {
 			HashOperations<Serializable, Object, Object>  hash = redisTemplate.opsForHash();
 			hash.put(key,hashKey,value);
-			redisTemplate.expire(key, expireTime, TimeUnit.HOURS);
+			if(type.equals("hour")) {
+				redisTemplate.expire(key, expireTime, TimeUnit.HOURS);
+			}
+			else {
+				redisTemplate.expire(key, expireTime, TimeUnit.MINUTES);
+			}
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -94,6 +100,21 @@ public class RedisService {
 	public Object hashGet(String key, Object hashKey){
         HashOperations<Serializable, Object, Object>  hash = redisTemplate.opsForHash();
         return hash.get(key,hashKey);
+    }
+	
+	public Set<Object> hashKeys(String key){
+        HashOperations<Serializable, Object, Object>  hash = redisTemplate.opsForHash();
+        return hash.keys(key);
+    }
+	
+	public Object hashDel(String key, Object hashKey){
+        HashOperations<Serializable, Object, Object>  hash = redisTemplate.opsForHash();
+        return hash.delete(key,hashKey);
+    }
+	
+	public Long hashLen(String key){
+        HashOperations<Serializable, Object, Object>  hash = redisTemplate.opsForHash();
+        return hash.size(key);
     }
 	
 	public void lPush(String k,Object v){
