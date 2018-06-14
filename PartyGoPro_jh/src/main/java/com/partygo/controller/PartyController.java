@@ -22,6 +22,7 @@ import com.partygo.service.PartyAbsService;
 import com.partygo.service.PartyDetailService;
 import com.partygo.service.PartyService;
 import com.partygo.service.PgStatisService;
+import com.partygo.service.RedisService;
 import com.partygo.util.LogUtil;
 import com.partygo.util.UuidUtil;
 
@@ -42,6 +43,8 @@ public class PartyController {
 	private PgStatisService pgStatisService;
 	@Resource
 	private WxConfig wxConfig;
+	@Resource
+	private RedisService redisService;
 	
 	@ApiOperation(value="获取聚会详细信息", notes="根据聚会id获取聚会详细要信息")
 	@RequestMapping(value="/partyDetail.json/{pid}",method=RequestMethod.GET)
@@ -87,7 +90,16 @@ public class PartyController {
 				LogUtil.error(new Exception("请求参数为空"), getClass());
 			}
 			else {
-				Integer delRes = partyService.deletePartyInfo(pid,openid);
+				//转换真实openid
+				if(!redisService.exists(openid)) {
+					res.setCode("0003");
+					res.setMessage("未获取到登录状态");
+					LogUtil.error(new Exception("partyService.delParty未获取到登录状态"), getClass());
+					pgStatisService.statisCall("delParty", res.getCode(), res.getMessage());
+					return res;
+				}
+				String realOpenid = redisService.hashGet(openid, "openid").toString();
+				Integer delRes = partyService.deletePartyInfo(pid,realOpenid);
 				if(delRes == null || delRes == 0) {
 					res.setCode("0003");
 					res.setMessage("聚会信息删除失败,partyService.deletePartyInfo返回delRes="+delRes);
@@ -129,6 +141,17 @@ public class PartyController {
 				detail.setCreateTime(nousedate);
 				detail.setUpdateTime(nousedate);
 				
+				//转换真实openid
+				String openid = detail.getOpenid();
+				if(!redisService.exists(openid)) {
+					res.setCode("0003");
+					res.setMessage("未获取到登录状态");
+					LogUtil.error(new Exception("partyService.publishParty未获取到登录状态"), getClass());
+					pgStatisService.statisCall("publishParty", res.getCode(), res.getMessage());
+					return res;
+				}
+				String realOpenid = redisService.hashGet(openid, "openid").toString();
+				detail.setOpenid(realOpenid);
 				PartyAbs abs = new PartyAbs();
 				abs.setAppid(wxConfig.getAppid());
 				abs.setPartyid(pid);

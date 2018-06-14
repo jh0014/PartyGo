@@ -10,9 +10,11 @@ import javax.annotation.Resource;
 
 import org.codehaus.xfire.util.Base64;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
@@ -48,8 +50,8 @@ public class WxController {
 	private PgUserService pgUserService;
 	
 	@ApiOperation(value="获取用户openid", notes="获取用户openid")
-	@PostMapping(value="/js2session.json")
-	public JsonResult js2session(@RequestBody String code) {
+	@GetMapping(value="/js2session.json")
+	public JsonResult js2session(@RequestParam String code) {
 		LogUtil.info("执行js2session,code="+code);
 		JsonResult res = new JsonResult();
 		try {
@@ -86,14 +88,10 @@ public class WxController {
 					String md5Openid = MD5Util.MD5(openid);
 					String TimeNow = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());  
 					String outOpenid = md5Openid + TimeNow;
-					//查询redis是否存在缓存openid
-					String tmpOpenid = (String) redisService.hashGet(outOpenid, "openid");
-					String tmpSessionKey = (String) redisService.hashGet(outOpenid, "sessionkey");
-					if(StringUtils.isNullOrEmpty(tmpOpenid) || StringUtils.isNullOrEmpty(tmpSessionKey)){
-						//存储洗白openid和openid的映射
-						redisService.hashSet(outOpenid, "openid", openid, 24, "hour");
-						redisService.hashSet(outOpenid, "sessionkey", sessionKey, 24, "hour");
-					}
+
+					//存储洗白openid和openid的映射
+					redisService.hashSet(outOpenid, "openid", openid);
+					redisService.hashSet(outOpenid, "sessionkey", sessionKey);
 					
 					res.setCode("0000");
 					res.setMessage("获取openid成功");

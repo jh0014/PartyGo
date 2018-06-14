@@ -88,11 +88,11 @@
     </if>
   </select>
   
-  <select id="selectListByOpenid" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectListByOpenid" resultMap="BaseResultMap" >
     select
     <include refid="Base_Column_List" />
     from PG_ABS
-    where OPENID = #{openid,jdbcType=VARCHAR}
+    where OPENID = #{openid,jdbcType=VARCHAR} and STATUS = #{status,jdbcType=INTEGER}
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
     select 
@@ -281,7 +281,7 @@
   <update id="updateAbsStatus">
     update PG_ABS
     set 
-      STATUS = #{arg2}
-    where PARTYID = #{arg0} and OPENID = #{arg1}
+      STATUS = #{status,jdbcType=INTEGER}
+    where PARTYID = #{partyid,jdbcType=VARCHAR} and OPENID = #{openid,jdbcType=VARCHAR}
   </update>
 </mapper>

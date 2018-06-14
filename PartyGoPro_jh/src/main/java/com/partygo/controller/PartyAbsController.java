@@ -19,6 +19,7 @@ import com.partygo.config.WxConfig;
 import com.partygo.model.PartyAbs;
 import com.partygo.service.PartyAbsService;
 import com.partygo.service.PgStatisService;
+import com.partygo.service.RedisService;
 import com.partygo.util.LogUtil;
 import com.partygo.util.UuidUtil;
 
@@ -35,6 +36,8 @@ public class PartyAbsController {
 	private PgStatisService pgStatisService;
 	@Resource
 	private WxConfig wxConfig;
+	@Resource
+	private RedisService redisService;
 	
 	@ApiOperation(value="获取聚会摘要信息", notes="根据聚会id获取聚会摘要信息")
 	@RequestMapping(value="/partyabs.json",method=RequestMethod.GET)
@@ -73,7 +76,15 @@ public class PartyAbsController {
 		LogUtil.info("开始执行getAbsListByPid，openid:"+openid);
 		JsonResult res = new JsonResult();
 		try {
-			List<PartyAbs> abs =  partyAbsService.getPartyAbsListByOpenId(openid);
+			if(!redisService.exists(openid)) {
+				res.setCode("0003");
+				res.setMessage("未获取到登录状态");
+				LogUtil.error(new Exception("partyAbsService.getPartyAbsListByOpenId未获取到登录状态"), getClass());
+				pgStatisService.statisCall("partyabsList", res.getCode(), res.getMessage());
+				return res;
+			}
+			String realOpenid = redisService.hashGet(openid, "openid").toString();
+			List<PartyAbs> abs =  partyAbsService.getPartyAbsListByOpenId(realOpenid);
 			if(abs == null) {
 				res.setCode("0001");
 				res.setMessage("返回为空");
