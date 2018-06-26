@@ -97,6 +97,13 @@ public class RedisService {
         hash.put(key,hashKey,value);
     }
 	
+	public void expire(String key, Long timeout, String type) {
+		if(type.equals("hour"))
+			redisTemplate.expire(key, timeout, TimeUnit.HOURS);
+		else
+			redisTemplate.expire(key, timeout, TimeUnit.MINUTES);
+	}
+	
 	public Object hashGet(String key, Object hashKey){
         HashOperations<Serializable, Object, Object>  hash = redisTemplate.opsForHash();
         return hash.get(key,hashKey);

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
+import com.mysql.jdbc.StringUtils;
 import com.partygo.common.JsonResult;
 import com.partygo.service.PgStatisService;
 import com.partygo.service.RedisService;
@@ -50,15 +51,31 @@ public class GameSocketController {
 					res.setMessage("房间不存在");
 					LogUtil.error(new Exception("房间不存在"), getClass());
 				}else {
-					Object objVal = redisService.hashGet(rid, "num");
-					Long numLimit = Long.parseLong(objVal.toString());
-					Long nowNum = redisService.hashLen(rid) - 1;
-					if(numLimit > nowNum) {
-						res.setCode("0000");
-						res.setMessage("允许加入房间");
+					//判断游戏状态
+					Object statusVal = redisService.hashGet(rid, "status");
+					String status = statusVal.toString();
+					if(StringUtils.isNullOrEmpty(status)) {
+						res.setCode("0004");
+						res.setMessage("未能获取游戏状态");
+						LogUtil.error(new Exception("未能获取游戏状态"), getClass());
 					}else {
-						res.setCode("0001");
-						res.setMessage("房间人数已满，再瘦也挤不进去了~");
+						if(!status.equals("0")) {
+							res.setCode("0005");
+							res.setMessage("游戏已经开始无法加入");
+							LogUtil.error(new Exception("游戏已经开始无法加入"), getClass());
+						}else {
+							//判断房间人数状态
+							Object numVal = redisService.hashGet(rid, "num");
+							Long numLimit = Long.parseLong(numVal.toString());
+							Long nowNum = redisService.hashLen(rid) - 1;
+							if(numLimit > nowNum) {
+								res.setCode("0000");
+								res.setMessage("允许加入房间");
+							}else {
+								res.setCode("0001");
+								res.setMessage("房间人数已满，再瘦也挤不进去了~");
+							}
+						}
 					}
 				}
 			}

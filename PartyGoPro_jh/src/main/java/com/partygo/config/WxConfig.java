@@ -14,6 +14,26 @@ public class WxConfig {
 	private String secret;
 	
 	private String granttype;
+	
+	private String hzappid;
+	
+	private String hzsecret;
+	
+	public String getHzappid() {
+		return hzappid;
+	}
+
+	public void setHzappid(String hzappid) {
+		this.hzappid = hzappid;
+	}
+
+	public String getHzsecret() {
+		return hzsecret;
+	}
+
+	public void setHzsecret(String hzsecret) {
+		this.hzsecret = hzsecret;
+	}
 
 	public String getSecret() {
 		return secret;
